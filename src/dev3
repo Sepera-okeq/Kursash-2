@@ -1,0 +1,22 @@
+  package_path = os.path.join(PACKAGES, f"{package_name}-{package_version}.zip")
+  latest_path = os.path.join(PACKAGES, f"{package_name}-latest.zip")
+  
+  package_content.save(package_path)
+  is_latest = True
+  for name in os.listdir("packages"):
+    if name.startswith(f"{package_name}-") and name.endswith(".zip"):
+      version = name[len(package_name) + 1 : -len(".zip")]
+      
+      if version == "latest":
+        continue
+
+      if semver.compare(package_version, version) == -1:
+        is_latest = False      
+
+  if is_latest:
+    if os.path.exists(latest_path):
+      os.remove(latest_path)
+
+    shutil.copyfile(package_path, latest_path)
+
+  return "Package uploaded successfully", 200

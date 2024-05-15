@@ -1,0 +1,9 @@
+app = flask.Flask(__name__)
+
+
+@app.route("/packages/<path:filename>", methods=["GET"])
+def packages(filename):
+  if not os.path.exists(PACKAGES):
+    os.makedirs(PACKAGES)
+
+  return flask.send_from_directory(PACKAGES, filename)

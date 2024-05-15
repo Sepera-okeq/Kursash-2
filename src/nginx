@@ -1,0 +1,89 @@
+# Общие настройки
+
+# Отключение вывода nginx-версии
+server_tokens off;
+
+# Базовая конфигурация
+server {
+    listen 80;
+    server_name example.com;
+
+    # Директива для установки корневой директории
+    root /path/to/root;
+
+    # Логирование ошибок
+    error_log /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+
+    # Отключение доступа к файлам начинающимся с точки
+    location ~ /\. {
+        deny all;
+    }
+
+    # Автоиндексирование содержимого модулей
+    location /modules {
+        alias /path/to/modules;
+        autoindex on;
+    }
+
+    # Конфигурация поддомена api
+    location /api {
+        # Путь к модулям
+        lua_package_path '/path/to/modules/?.lua;;';
+        lua_package_cpath '/path/to/modules/?.so;;';
+
+        # Путь к скриптам
+        lua_path '/path/to/scripts/?.lua;;';
+
+        # Определение хоста и порта БД PostgreSQL
+        set $pgsql_host 'localhost';
+        set $pgsql_port '5432';
+
+        # Установка значений переменных для подключения к БД
+        set_by_lua_block $pgsql_database {
+            return os.getenv("DB_NAME")
+        }
+        set_by_lua_block $pgsql_user {
+            return os.getenv("DB_USER")
+        }
+        set_by_lua_block $pgsql_password {
+            return os.getenv("DB_PASSWORD")
+        }
+
+        # Настройка запроса к БД PostgreSQL
+        set_by_lua_block $jwt_secret {
+            local pg = require "resty.postgres"
+            local pgsql = pg:new()
+            local ok, err = pgsql:connect{
+                host = ngx.var.pgsql_host,
+                port = ngx.var.pgsql_port,
+                database = ngx.var.pgsql_database,
+                user = ngx.var.pgsql_user,
+                password = ngx.var.pgsql_password
+            }
+            if not ok then
+                ngx.log(ngx.ERR, "failed to connect to PostgreSQL: ", err)
+                return ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+            end
+
+            local res, err = pgsql:query"SELECT jwt_secret FROM users WHERE id = 1"
+            if not res then
+                ngx.log(ngx.ERR, "failed to query the JWT secret from PostgreSQL: ", err)
+                return ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+            end
+
+            return res[1].jwt_secret
+        }
+
+        # Аутентификация с помощью JWT
+        auth_jwt 'SecretKey';
+        auth_jwt_key_file /path/to/public-key.pem;
+        auth_jwt_alg RS256;
+
+        # Проксирование запросов в backend-сервер
+        proxy_pass http://backend-server;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
