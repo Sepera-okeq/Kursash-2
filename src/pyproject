@@ -1,36 +1,24 @@
-[build-system]
-build-backend = "setuptools.build_meta"
-
-requires = [
-  "setuptools",
-]
-
-
-[project]
-description = "Sakurajima is the latest package manager based on revolutionary technologies! You can create a package for one programming language and use it in another, while the package manager is not limited to just one language!"
-name = "sakurajima"
-version = "1.0.0"
-readme = "README.md"
-
-authors = [
-  { name = "sepera_okeq", email = "sepera_okeq@economic-crisis.com" },
-]
-
-classifiers = [
-  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-]
-
-license = { text = "GPLv3" }
-
-dependencies = [
-  "flask",
-  "requests",
-  "semver",
-]
-
-
-[project.scripts]
-sakurajima        = "sakurajima.scripts.client:main"
-sakurajima-server = "sakurajima.scripts.server:main"
+    [build-system]
+    build-backend = "setuptools.build_meta"
+    requires = [ "setuptools" ]
+    [project]
+    description = "Sakurajima is the latest package manager
+    based on revolutionary technologies!"
+    name = "sakurajima"
+    version = "1.0.0"
+    readme = "README.md"
+    authors = [
+      { name = "sepera_okeq",
+        email = "sepera_okeq@economic-crisis.com" },
+    ]
+    classifiers = [
+      "License :: OSI Approved :: GNU General Public License v3 
+      or later (GPLv3+)",
+      "Programming Language :: Python",
+      "Programming Language :: Python :: 3",
+    ]
+    license = { text = "GPLv3" }
+    dependencies = [ "flask", "requests", "semver" ]
+    [project.scripts]
+    sakurajima        = "sakurajima.scripts.client:main"
+    sakurajima-server = "sakurajima.scripts.server:main"

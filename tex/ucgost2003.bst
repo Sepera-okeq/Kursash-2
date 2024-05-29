@@ -830,7 +830,7 @@ FUNCTION {bbl.media.online}
 { curlanguage "english" =
    { "Electronic resource online" }
    { curlanguage "russian" =
-      { "{Электронный ресурс онлайн}" }
+      { "{Электронный ресурс}" }
       { curlanguage "ukrainian" =
         { "{Електронний ресурс онлайн}" }
         { "language is not defined: " curlanguage " in bbl.media" * * warning$ "Electronic resource" }
@@ -1438,28 +1438,6 @@ FUNCTION {format.compiler.rest}
   if$
 }
 
-FUNCTION {output.address.publisher}
-{
-  address empty$
-    {
-      bbl.nnoaddress
-      publisher empty$
-        { "~: " * bbl.nopublisher * bracketise }
-        { bracketise "~: " * publisher * }
-      if$
-    }
-    {
-      address output
-      new.colon
-      publisher empty$
-        { bbl.nopublisher bracketise }
-        { publisher }
-      if$
-    }
-  if$
-  output
-}
-
 FUNCTION {output.bibitem}
 {
   set.language
@@ -1703,7 +1681,7 @@ FUNCTION {format.url}
 { url empty$
     { "" }
     {
-      bbl.url ": \BibUrl{" * url * "}" *
+      bbl.url ": " * url * " *
       urldate empty$
         { "" }
         { " (" bbl.urldate * ": " * urldate * ")" * }
@@ -2594,10 +2572,10 @@ FUNCTION {begin.bib}
   "\else\selectlanguage{#1}\fi}"                     write$ newline$
   "\providecommand*{\href}[2]{{\small #2}}"          write$ newline$
   "\providecommand*{\url}[1]{{\small #1}}"           write$ newline$
-  "\providecommand*{\BibUrl}[1]{\url{#1}}"           write$ newline$
+  "\providecommand*{\BibUrl}[1]{#1}"                 write$ newline$
   "\providecommand{\BibAnnote}[1]{}"                 write$ newline$
   "\providecommand*{\BibEmph}[1]{#1}"                write$ newline$
-  "\ProvideTextCommandDefault{\cyrdash}{\iflanguage{russian}{\hbox to.8em{--\hss--}}{\textemdash}}" write$ newline$
+  "\ProvideTextCommandDefault{\cyrdash}{\iflanguage{russian}{\hbox to.8em}{\textemdash}}" write$ newline$
   "\providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em plus 0.1em\fi" write$ newline$
   "\cyrdash\hskip.2em plus 0.1em\ignorespaces}" write$ newline$
   "\renewcommand{\newblock}{\ignorespaces}" write$ newline$

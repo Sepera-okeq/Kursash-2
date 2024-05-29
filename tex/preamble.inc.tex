@@ -19,6 +19,13 @@ citecolor=black, menucolor=black, filecolor=black,
 
 \usepackage{microtype}% полезный пакет для микротипографии, увы под xelatex мало чего умеет, но под pdflatex хорошо улучшает читаемость
 
+\usepackage{etoolbox}
+
+\AtBeginEnvironment{minted}{%
+  \setlength\abovecaptionskip{0pt}%
+  \setlength\belowcaptionskip{0pt}%
+}
+
 % Тире могут быть невидимы в Adobe Reader
 \ifInvisibleDashes
 \MakeDashesBold
@@ -50,7 +57,7 @@ citecolor=black, menucolor=black, filecolor=black,
 \usepackage{paralist,array}
 
 %\setlength{\parskip}{1ex plus0.5ex minus0.5ex} % разрыв между абзацами
-\setlength{\parskip}{1ex} % разрыв между абзацами
+%\setlength{\parskip}{1ex} % разрыв между абзацами
 
 % Центрирование подписей к плавающим окружениям
 %\usepackage[justification=centering]{caption}

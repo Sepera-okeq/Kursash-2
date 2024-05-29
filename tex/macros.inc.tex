@@ -1,2 +1,40 @@
 % Любимые команды
 \newcommand{\Code}[1]{\textbf{#1}}
+
+\usepackage{enumitem}
+% \setlist[itemize]{label=—, left=2.5em, nosep, topsep=0pt, partopsep=0pt}
+\setlist[enumerate]{left=2.5em, labelwidth=2em, labelsep=0.25em, itemindent=3.75em, nosep, topsep=0pt, partopsep=0pt}
+\setlist[itemize]{label=—, left=2.5em, labelwidth=2em, labelsep=0.25em, itemindent=3.75em, nosep, topsep=0pt, partopsep=0pt}
+
+% Нумерация рисунков
+\usepackage{caption}
+\captionsetup[figure]{labelsep=endash, name=Рисунок}
+\captionsetup[table]{labelsep=endash, name=Таблица}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+
+\usepackage{titlesec}
+\titleformat{\section}[hang]{\bfseries}{\hspace{1.25cm}\thesection}{1em}{}
+\titleformat{\subsection}[hang]{\bfseries}{\hspace{1.25cm}\thesubsection}{1em}{}
+\titleformat{\subsubsection}[hang]{\bfseries}{\hspace{1.25cm}\thesubsubsection}{1em}{}
+\titleformat{name=\section,numberless}[hang]{\bfseries}{}{1em}{\centering}
+
+
+% Перенос текста при переполнении
+\emergencystretch=25pt
+
+
+\titlespacing*{\chapter}{0pt}{0pt}{0pt}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+% Центрирование номера раздела
+\renewcommand{\thechapter}{\arabic{chapter}.}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}.}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}.}
+\renewcommand{\thesubsubsection}{\arabic{chapter}.\arabic{section}.\arabic{section}.\arabic{subsection}.}
+\usepackage{setspace}
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1)}
+\makeatother

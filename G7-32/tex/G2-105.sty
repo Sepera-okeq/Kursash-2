@@ -150,7 +150,7 @@
  \addtolength\Gost@TitleDropSkip{-\GostAfterTitleSkip}
 %  стиль всех заголовков, \normalfont оставлен
 \newcommand\GostTitleStyle{\normalfont\bfseries}
-\newcommand\Gost@MainChapterStyle{\large}
+\newcommand\Gost@MainChapterStyle{\small}
 \newcommand\Gost@StructChapterStyle{\large\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
@@ -217,8 +217,7 @@
     \addcontentsline{toc}{chapter}{#1}%
     \fi
     \chaptermark{#1}%
-    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+
     \@makechapterhead{#2}%
     \@afterheading
 }
@@ -230,12 +229,11 @@
             \thechapter\hskip 5\p@%
 %
         \else%
-            \@chapapp\space\thechapter\hskip 5\p@%
+            \@chapapp\space\space\thechapter\hskip 5\p@%
         \fi
     \fi
     \interlinepenalty\@M
     \Gost@ChapterStyle{#1}\par\nobreak
-    \vspace{\GostAfterTitleSkip}
   }}
 \def\@schapter#1{
                    \@makeschapterhead{#1}%
@@ -743,7 +741,7 @@
 \newcommand\TableInChapter{%
     \@addtoreset{table}{chapter}%
     \@tablesonchaptertrue%
-    \renewcommand{\thetable}{\thechapter.\arabic{table}}%
+    \renewcommand{\thetable}{\arabic{table}}%
 }
 
 \RequirePackage{longtable} % многостраничные таблицы
@@ -816,16 +814,16 @@
 
 
 \newcommand{\l@chapter}        {\@dottedtocline{1}{0mm}{1em}}
-\newcommand{\l@section}        {\@dottedtocline{2}{.8em}{2em}}
-\newcommand{\l@subsection}     {\@dottedtocline{3}{1.6em}{2.7em}}
-\newcommand{\l@subsubsection}  {\@dottedtocline{4}{2.4em}{3.5em}}
+\newcommand{\l@section}        {\@dottedtocline{1}{0mm}{1.9em}}
+\newcommand{\l@subsection}     {\@dottedtocline{1}{0mm}{2.7em}}
+\newcommand{\l@subsubsection}  {\@dottedtocline{1}{0mm}{3.5em}}
 \newcommand{\l@paragraph}      {\@dottedtocline{5}{3.2em}{4.8em}}
 \newcommand{\l@subparagraph}   {\@dottedtocline{6}{5.0em}{4.8em}}
 \newcommand*{\l@figure}        {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand*{\l@table}         {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
 \newcommand\@dotsep{4.5}      %между точками в оглавлении в em
-\linespread{\Gost@LineSpread} %полуторный межстрочный интервал
+\linespread{1.5} %полуторный межстрочный интервал
 
 
 %  4.3.4 - 4.1.14 Приложения
@@ -839,8 +837,8 @@
     \setcounter{chapter}{0}%
     \setcounter{section}{0}%
     \EqInChapter\PicInChapter\TableInChapter%
-    \renewcommand\@chapapp{\appendixname}%
-    \gdef\thechapter{\Asbuk{chapter}}%
+    \renewcommand\@chapapp{ПРИЛОЖЕНИЕ}%
+    \gdef\thechapter{\arabic{chapter}}%
     \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
     \setlength\Gost@ChapterIndent{0mm}%
     \let\@sect\Gost@old@sect%

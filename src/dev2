@@ -1,18 +1,19 @@
-@app.route("/upload", methods=["POST"])
-def upload():
-  if not os.path.exists(PACKAGES):
-    os.makedirs(PACKAGES)
-
-  if "name" not in flask.request.form or "version" not in flask.request.form:
-    return "Missing required fields", 400
-
-  if "file" not in flask.request.files:
-    return "Missing required fields", 400
-
-  package_name    = flask.request.form["name"]
-  package_version = flask.request.form["version"]
-
-  package_content = flask.request.files["file"]
-
-  if not semver.Version.is_valid(package_version):
-    return "Version must be in SemVer format", 400
+    @app.route("/upload", methods=["POST"])
+    def upload():
+      if not os.path.exists(PACKAGES):
+        os.makedirs(PACKAGES)
+    
+      if "name" not in flask.request.form or "version"
+      not in flask.request.form:
+        return "Missing required fields", 400
+    
+      if "file" not in flask.request.files:
+        return "Missing required fields", 400
+    
+      package_name    = flask.request.form["name"]
+      package_version = flask.request.form["version"]
+    
+      package_content = flask.request.files["file"]
+    
+      if not semver.Version.is_valid(package_version):
+        return "Version must be in SemVer format", 400
